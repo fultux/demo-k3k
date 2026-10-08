@@ -1,0 +1,13 @@
+apiVersion: k3k.io/v1beta1
+kind: Cluster
+metadata:
+  name: k3k-shared
+  namespace: k3k-shared
+spec:
+  mode: shared
+  version: v1.34.11-k3s1
+  servers: 1
+  agents: 0
+  persistence:
+    type: dynamic
+    storageClassName: local-path

@@ -1,0 +1,13 @@
+apiVersion: k3k.io/v1beta1
+kind: VirtualClusterPolicy
+metadata:
+  name: tenant-psa-policy
+  namespace: k3k-virtual
+spec:
+  podSecurityStandards:
+    enforce: restricted
+    enforceVersion: latest
+    warn: restricted
+    warnVersion: latest
+    audit: restricted
+    auditVersion: latest

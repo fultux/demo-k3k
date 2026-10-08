@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-workload
+spec:
+  runtimeClassName: kata
+  containers:
+  - name: nginx
+    image: nginx

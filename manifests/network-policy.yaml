@@ -1,0 +1,7 @@
+apiVersion: k3k.io/v1beta1
+kind: VirtualClusterPolicy
+metadata:
+  name: tenant-network-policy
+  namespace: k3k-virtual
+spec:
+  disableNetworkPolicy: false

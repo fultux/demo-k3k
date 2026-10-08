@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: storage-restriction
+  namespace: k3k-custom
+spec:
+  hard:
+    # Grant quota on the target storage class
+    fast-storage.storageclass.storage.k8s.io/requests.storage: 20Gi
+    fast-storage.storageclass.storage.k8s.io/persistentvolumeclaims: "5"
+    # Restrict and deny all other host storage classes
+    local-path.storageclass.storage.k8s.io/persistentvolumeclaims: "0"
+    standard.storageclass.storage.k8s.io/persistentvolumeclaims: "0"

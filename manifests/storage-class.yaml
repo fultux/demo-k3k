@@ -1,0 +1,14 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast-storage
+  labels:
+    tier: fast
+    k3k.io/tenant: k3k-custom
+provisioner: rancher.io/local-path
+volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+- matchLabelExpressions:
+  - key: storage-tier
+    values:
+    - fast
