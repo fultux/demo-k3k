@@ -7,12 +7,8 @@ spec:
   mode: hcp
   version: v1.34.11-k3s1
   servers: 1
-  agents: 0
-  expose:
-    loadBalancer:
-      enabled: true
   tlsSANs:
     - "k3k-hcp.example.com"
   persistence:
     type: dynamic
-    storageClassName: local-path
+    storageClassName: longhorn

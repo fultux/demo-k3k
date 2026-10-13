@@ -10,4 +10,4 @@ spec:
   agents: 2
   persistence:
     type: dynamic
-    storageClassName: local-path
+    storageClassName: longhorn

@@ -42,7 +42,7 @@ In **shared** mode, the virtual control plane runs as a pod on the host cluster,
   ```
 * **Retrieve the kubeconfig**:
   ```bash
-  kubectl get secret -n k3k-shared k3k-k3k-shared-kubeconfig -o jsonpath='{.data.kubeconfig}' | base64 -d > kubeconfig-shared.yaml
+  kubectl get secret -n k3k-shared k3k-k3k-shared-kubeconfig -o jsonpath='{.data.kubeconfig\.yaml}' | base64 -d > kubeconfig-shared.yaml
   ```
 * **Behavior**: Workloads scheduled in the virtual cluster will directly translate to pods running in the `k3k-shared` namespace on the host cluster.
 ---
@@ -58,11 +58,12 @@ In **virtual** mode, both the control plane and worker agents run in isolated po
   ```
 * **Retrieve the kubeconfig**:
   ```bash
-  kubectl get secret -n k3k-virtual k3k-k3k-virtual-kubeconfig -o jsonpath='{.data.kubeconfig}' | base64 -d > kubeconfig-virtual.yaml
+  kubectl get secret -n k3k-virtual k3k-k3k-virtual-kubeconfig -o jsonpath='{.data.kubeconfig\.yaml}' | base64 -d > kubeconfig-virtual.yaml
   ```
+
 * **Behavior**: Virtual nodes appear in `kubectl --kubeconfig kubeconfig-virtual.yaml get nodes` corresponding to the `agents` count configured in the manifest.
 
-
+* **Hint**: The cluster might not be able to deploy. Can you troubleshoot the issue ?  
 
 
 ---
@@ -77,7 +78,7 @@ In **hcp** mode, only the control plane runs as pods on the host cluster. The AP
   ```
 * **Retrieve the kubeconfig**:
   ```bash
-  kubectl get secret -n k3k-hcp k3k-k3k-hcp-kubeconfig -o jsonpath='{.data.kubeconfig}' | base64 -d > kubeconfig-hcp.yaml
+  kubectl get secret -n k3k-hcp k3k-k3k-hcp-kubeconfig -o jsonpath='{.data.kubeconfig\.yaml}' | base64 -d > kubeconfig-hcp.yaml
   ```
 * **Join external nodes**: Retrieve the node token from the cluster secret:
   ```bash
