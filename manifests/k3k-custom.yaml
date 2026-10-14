@@ -7,7 +7,20 @@ spec:
   mode: shared
   version: v1.34.11-k3s1
   servers: 1
-  agents: 0
+  agents: 1
   persistence:
     type: dynamic
-    storageClassName: fast-storage
+    storageClassName: longhorn
+  sync:
+    persistentVolumeClaims:
+      enabled: true
+    configMaps:
+      enabled: true
+    secrets:
+      enabled: true
+    ingresses:
+      enabled: true
+    storageClasses:
+      enabled: true
+      selector:
+        k3k.io/tenant: k3k-custom

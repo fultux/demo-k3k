@@ -94,7 +94,7 @@ In **shared mode**, workloads running in the virtual cluster are physically sche
 #### Step 1: Deploy a workload in the virtual cluster
 Deploy an application inside the virtual cluster using its kubeconfig:
 ```bash
-kubectl --kubeconfig kubeconfig-shared.yaml create deployment nginx --image=nginx
+kubectl --kubeconfig kubeconfig-shared.yaml create deployment nginx --image=nginx -n external
 ```
 
 Verify on the host cluster that the pod is running with label `app=nginx` in the tenant namespace:
@@ -149,6 +149,40 @@ kubectl create namespace k3k-custom
 kubectl apply -f manifests/storage-class.yaml
 kubectl apply -f manifests/k3k-custom.yaml
 ```
+
+Get the cluster's Kubeconfig
+```bash
+kubectl get secret -n k3k-custom k3k-k3k-custom-kubeconfig -o jsonpath='{.data.kubeconfig\.yaml}' | base64 -d > kubeconfig-custom.yaml
+```
+
+Verify you have access to the selected storage class
+``` bash
+kubectl --kubeconfig=kubeconfig-custom.yaml get sc
+```
+
+In the custom cluster deploy the nginx pod and deploy the ingress
+``` bash
+kubectl --kubeconfig=kubeconfig-custom.yaml apply -f manifests/demo-pod-nginx.yaml
+kubectl --kubeconfig=kubeconfig-custom.yaml apply -f manifests/expose-custom-ingress.yaml
+```
+
+ Test connectivity:
+  ```bash
+  curl -H "Host: nginx-shared.example.com" http://<host-ingress-ip>
+  ```
+
+Verify you have an ingress on the custom cluster 
+ Test connectivity:
+  ```bash
+  kubectl get ingress -n demo
+  ```
+
+Verify the ingress is present in the host cluster
+```bash
+kubectl get ing -n k3k-custom
+```
+
+
 
 ### 2. Virtual cluster policies
 k3k provides a dedicated `VirtualClusterPolicy` custom resource (`k3k.io/v1beta1`) to govern virtual cluster boundaries. A single `VirtualClusterPolicy` applied in the virtual cluster's namespace configures:
